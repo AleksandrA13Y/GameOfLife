@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="script.js"></script>
+		<style type="text/css">
+			button {
+				padding: 5px;
+				margin: 3px;
+				font-size: 20px;
+			}
+			.vertical {
+            	border-left: 6px solid black;
+            	height: 98%;
+            	position: absolute;
+            	left: 3600px;
+        	}
+		</style>
+	</head>
+	<body>
+		<div style="float: right; font-size: 24px">
+			<div class = "vertical"></div>
+
+			<h1>Killing/Spawning</h1>
+			<button onclick="KillAll()">Kill all</button>
+			<button onclick="SpawnGrass()">Spawn grass</button>
+			<button onclick="SpawnGrassEater()">Spawn grass eater</button><br>
+			<button onclick="SpawnOmnivorous()">Spawn omnivorous</button>
+			<button onclick="SpawnSpice()">Spawn spice</button>
+			<button onclick="SpawnHarvester()">Spawn harvester</button>
+
+			<h1>Events</h1>
+			<button onclick="Lightning()">Call lightning</button>
+			<button onclick="Meteorite()">Create meteorite</button>
+			<button onclick="Bomb()">Bomb area</button>
+
+			<h1>Statistics</h1>
+			Entities borned: <p id="EB"></p>
+			Entities died: <p id="ED"></p>
+			Grass(RT): <p id="GRT"></p>
+			Grass eateres(RT): <p id="GERT"></p>
+			Omnivorouses(RT): <p id="ORT"></p>
+			Spice(RT): <p id="SRT"></p>
+			Harvesters(RT): <p id="HRT"></p>
+		</div>
+	</body>
+</html>

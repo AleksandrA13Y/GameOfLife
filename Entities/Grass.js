@@ -6,7 +6,6 @@ module.exports = class Grass extends Inherit {
 		this.multiply = 0
 
 		matrix[this.y][this.x] = 1
-		grassArr.push(this)
 	}
 
 	mul() {

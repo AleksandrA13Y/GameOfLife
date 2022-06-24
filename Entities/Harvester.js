@@ -14,7 +14,6 @@ module.exports = class Harvester extends Inherit {
 		this.prevY = undefined
 
 		matrix[this.y][this.x] = 5
-		harvesterArr.push(this)
 	}
 
 	chooseCell(num) {

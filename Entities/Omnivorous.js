@@ -9,7 +9,6 @@ module.exports = class Omnivorous extends Inherit {
 		this.energy = 20
 
 		matrix[this.y][this.x] = 4
-		omnivorousArr.push(this)
 	}
 
 	moving() {

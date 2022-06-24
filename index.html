@@ -13,17 +13,18 @@
 			}
 			.vertical {
             	border-left: 6px solid black;
-            	height: 98%;
+            	height: 92%;
             	position: absolute;
-            	left: 3600px;
+            	left: 50%;
         	}
 		</style>
 	</head>
-	<body>
+	<body style="font-family: sans-serif;">
+		<div style="width: 100%; font-size: 45px; text-align: center; background-color: green; margin-bottom: 1%;">Game Of Life</div>
 		<div style="float: right; font-size: 24px">
 			<div class = "vertical"></div>
 
-			<h1>Killing/Spawning</h1>
+			<h2>Killing/Spawning</h2>
 			<button onclick="KillAll()">Kill all</button>
 			<button onclick="SpawnGrass()">Spawn grass</button>
 			<button onclick="SpawnGrassEater()">Spawn grass eater</button><br>
@@ -31,19 +32,19 @@
 			<button onclick="SpawnSpice()">Spawn spice</button>
 			<button onclick="SpawnHarvester()">Spawn harvester</button>
 
-			<h1>Events</h1>
+			<h2>Events</h2>
 			<button onclick="Lightning()">Call lightning</button>
 			<button onclick="Meteorite()">Create meteorite</button>
 			<button onclick="Bomb()">Bomb area</button>
 
-			<h1>Statistics</h1>
-			Entities borned: <p id="EB"></p>
-			Entities died: <p id="ED"></p>
-			Grass(RT): <p id="GRT"></p>
-			Grass eateres(RT): <p id="GERT"></p>
-			Omnivorouses(RT): <p id="ORT"></p>
-			Spice(RT): <p id="SRT"></p>
-			Harvesters(RT): <p id="HRT"></p>
+			<h2>Statistics</h2>
+			<b>Entities borned:</b> <p id="EB"></p>
+			<b>Entities died:</b> <p id="ED"></p>
+			<b>Grass(RT):</b> <p id="GRT"></p>
+			<b>Grass eateres(RT):</b> <p id="GERT"></p>
+			<b>Omnivorouses(RT):</b> <p id="ORT"></p>
+			<b>Spice(RT):</b> <p id="SRT"></p>
+			<b>Harvesters(RT):</b> <p id="HRT"></p>
 		</div>
 	</body>
 </html>

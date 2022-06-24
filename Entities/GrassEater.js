@@ -6,7 +6,6 @@ module.exports = class GrassEater extends Inherit {
 		this.energy = 20
 
 		matrix[this.y][this.x] = 2
-		grassEaterArr.push(this)
 	}
 
 	

@@ -1,6 +1,6 @@
 var socket = io();
 
-var side = 23
+var side = 21.75
 
 function setup() {
 	createCanvas(50 * side, 50 * side)
@@ -37,19 +37,47 @@ function drawn(matrix) {
 	}
 }
 
-function fn(entities) {
-	 grassCount = entities.grassCount
-	 console.log(entities)
+function KillAll(matrix) {
+	socket.emit('kill')
+}
+
+function SpawnGrass(matrix) {
+	socket.emit('spawnGrass')
+}
+
+function SpawnGrassEater(matrix) {
+	socket.emit('spawnGrassEater')
+}
+
+function SpawnSpice(matrix) {
+	socket.emit('spawnSpice')
+}
+
+function SpawnOmnivorous(matrix) {
+	socket.emit('spawnOmnivorous')
+}
+
+function SpawnHarvester(matrix) {
+	socket.emit('spawnHarvester')
+}
+
+
+function fn(statistics) {
+	grassCount = statistics.grassArr
+	grassEaterCount = statistics.grassEaterArr
+	spiceCount = statistics.spiceArr
+	omnivorousCount = statistics.omnivorousArr
+	harvesterCount = statistics.harvesterArr
 }
 
 setInterval(
 	function(){
 		socket.on('send matrix', drawn)
 		socket.on('sendStat', fn)
-		document.getElementById("GRT").innerHTML = entities.grassCount
-		document.getElementById("GERT").innerHTML = entities.grassEaterCount
-		document.getElementById("ORT").innerHTML = entities.spiceCount
-		document.getElementById("SRT").innerHTML = entities.omnivorousCount
-		document.getElementById("HRT").innerHTML = entities.harvesterCount
+		document.getElementById("GRT").innerHTML = grassCount
+		document.getElementById("GERT").innerHTML = grassEaterCount
+		document.getElementById("ORT").innerHTML = spiceCount
+		document.getElementById("SRT").innerHTML = omnivorousCount
+		document.getElementById("HRT").innerHTML = harvesterCount
 	}, 250
 )

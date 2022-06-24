@@ -10,7 +10,6 @@ module.exports = class Spice extends Inherit {
 		this.multiply = 0
 
 		matrix[this.y][this.x] = 3
-		spiceArr.push(this)
 	}
 
 	mul() {

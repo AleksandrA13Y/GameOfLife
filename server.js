@@ -15,9 +15,9 @@ server.listen(3000);
 // ---------------------------------
 
 matrix = []
-for (var y = 0; y <= 50; y++) {
+for (var y = 0; y < 50; y++) {
     matrix.push([])
-    for (var x = 0; x <= 50; x++) {
+    for (var x = 0; x < 50; x++) {
         matrix[y].push(0)
     }
 }
@@ -38,12 +38,14 @@ Omnivorous = require("./Entities/Omnivorous")
 Spice = require("./Entities/Spice")
 Harvester = require("./Entities/Harvester")
 
+statistics = {}
+
 function gen(matrix) {
     for (let i = 0; i < 30; i++) {
         y = Math.round(Math.random() * 49)
         x = Math.round(Math.random() * 49)
         if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-            new Grass(x, y)
+            grassArr.push(new Grass(x, y))
         }
     }
     
@@ -52,7 +54,7 @@ function gen(matrix) {
         y = Math.round(Math.random() * 49)
         x = Math.round(Math.random() * 49)
         if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-            new GrassEater(x, y)
+            grassEaterArr.push(new GrassEater(x, y))
         }
     }
 
@@ -60,7 +62,7 @@ function gen(matrix) {
         y = Math.round(Math.random() * 49)
         x = Math.round(Math.random() * 49)
         if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-            new Spice(x, y)
+            spiceArr.push(new Spice(x, y))
         }
     }
 
@@ -68,7 +70,7 @@ function gen(matrix) {
         y = Math.round(Math.random() * 49)
         x = Math.round(Math.random() * 49)
         if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-            new Omnivorous(x, y)
+            omnivorousArr.push(new Omnivorous(x, y))
         }
     }
 
@@ -76,9 +78,10 @@ function gen(matrix) {
         y = Math.round(Math.random() * 49)
         x = Math.round(Math.random() * 49)
         if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-            new Harvester(x, y)
+            harvesterArr.push(new Harvester(x, y))
         }
     }
+
     io.sockets.emit('send matrix', matrix)
 }
 
@@ -99,20 +102,94 @@ function game() {
         harvesterArr[i].eat()
     }
 
+    statistics.grassArr = grassArr.length
+    statistics.grassEaterArr = grassEaterArr.length
+    statistics.spiceArr = spiceArr.length
+    statistics.omnivorousArr = omnivorousArr.length
+    statistics.harvesterArr = harvesterArr.length
+
+    io.sockets.emit('sendStat', statistics);
     io.sockets.emit("send matrix", matrix);
+}
+
+function killAll() {
+    grassArr = [];
+    grassEaterArr = [];
+    spiceArr = [];
+    omnivorousArr = [];
+    harvesterArr = [];
+
+    for (var y = 0; y < matrix.length; y++) {
+        for (var x = 0; x < matrix[y].length; x++) {
+            matrix[y][x] = 0
+        }
+    }
+}
+
+function spawnGrass() {
+    y = Math.round(Math.random() * 49)
+    x = Math.round(Math.random() * 49)
+    if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
+        new Grass(x, y)
+    }
+    else {
+        spawnGrass()
+    }
+}
+
+function spawnGrassEater() {
+    y = Math.round(Math.random() * 49)
+    x = Math.round(Math.random() * 49)
+    if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
+        new GrassEater(x, y)
+    }
+    else {
+        spawnGrassEater()
+    }
+}
+
+function spawnSpice() {
+    y = Math.round(Math.random() * 49)
+    x = Math.round(Math.random() * 49)
+    if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
+        new Spice(x, y)
+    }
+    else {
+        spawnSpice()
+    }
+}
+
+function spawnOmnivorous() {
+    y = Math.round(Math.random() * 49)
+    x = Math.round(Math.random() * 49)
+    if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
+        new Omnivorous(x, y)
+    }
+    else {
+        spawnOmnivorous()
+    }
+}
+
+function spawnHarvester() {
+    y = Math.round(Math.random() * 49)
+    x = Math.round(Math.random() * 49)
+    if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
+        new Harvester(x, y)
+    }
+    else {
+        spawnHarvester()
+    }
 }
 
 setInterval(game, 250)
 
 io.on('connection', function(socket) {
     gen(matrix)
-    let entities = {
-        grassCount:grassArr.length,
-        grassEaterCount:grassEaterArr.length,
-        spiceCount:spiceArr.length,
-        omnivorousCount:omnivorousArr.length,
-        harvesterCount:harvesterArr.length
-    }
 
-    io.sockets.emit('sendStat', entities)
+    socket.on("kill", killAll)
+    socket.on("spawnGrass", spawnGrass)
+    socket.on("spawnGrassEater", spawnGrassEater)
+    socket.on("spawnSpice", spawnSpice)
+    socket.on("spawnOmnivorous", spawnOmnivorous)
+    socket.on("spawnHarvester", spawnHarvester)
 })
